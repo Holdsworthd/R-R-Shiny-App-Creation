@@ -1,62 +1,86 @@
 library(shiny)
 
-# Define UI !!!!
+# Define UI ----
 ui <- fluidPage(
- titlePanel(strong("My Shiny App")),
-  sidebarLayout(
-    sidebarPanel(
-	h1(strong("Installation")),
-	p("Shiny is available on CRAN, so you can install it the usual way from your R console:"),
-	br(),
-	img(src = "rstudio.png", height = 140, width = 400),
-	br(),
-	br(),
-	p("Shiny is a product of",
-	span("RStudio", style = "color:blue"),
-)
-),
-    mainPanel(
-	h1(strong("Introducing Shiny")),
-	p("Shiny is a new package from RStudio that makes it", 
-      em("incredibly easy"), 
-      "to build interactive web applications with R."),
-	br(),
-	br(),
-	p("For an introduction and live examples, visit the",
-  	 a("Shiny homepage.", 
-          href = "http://darcyholdsworth.com")),
-	br(),
-	h2(strong("Features")),
-	p("- Build useful web applications with only a few lines of code - no JavaScript required."),
-	p("- Shiny applications areautomatically 'live' in the same way that",
-		strong("spreadsheets"),
-	"are live. Outputs change instantly as users modify inputs, without requiring to reload the browser."),
-		
-	br(),
-	br(),
-	br(),
-
-	p("p creates a paragraph of text."),
-      p("A new p() command starts a new paragraph. Supply a style attribute to change the format of the entire paragraph.", style = "font-family: 'times'; font-si16pt"),
-      strong("strong() makes bold text."),
-      em("em() creates italicized (i.e, emphasized) text."),
-      br(),
-      code("code displays your text similar to computer code"),
-      div("div creates segments of text with a similar style. This division of text is all blue because I passed the argument 'style = color:blue' to div", style = "color:blue"),
-      br(),
-      p("span does the same thing as div, but it works with",
-        span("groups of words", style = "color:blue"),
-        "that appear inside a paragraph."),
-	a("a creates a hyperlink.", 
-          href = "http://darcyholdsworth.com"),
-    )
+  titlePanel("Basic widgets"),
+  
+  fluidRow(
+    
+    column(3,
+           h3("Buttons"),
+           actionButton("action", "Action"),
+           br(),
+           br(), 
+           submitButton("Submit")),
+    
+    column(3,
+           h3("Single checkbox"),
+           checkboxInput("checkbox", "Choice A", value = TRUE)),
+    
+    column(3, 
+           checkboxGroupInput("checkGroup", 
+                              h3("Checkbox group"), 
+                              choices = list("Choice 1" = 1, 
+                                             "Choice 2" = 2, 
+                                             "Choice 3" = 3),
+                              selected = 1)),
+    
+    column(3, 
+           dateInput("date", 
+                     h3("Date input"), 
+                     value = "2014-01-01"))   
+  ),
+  
+  fluidRow(
+    
+    column(3,
+           dateRangeInput("dates", h3("Date range"))),
+    
+    column(3,
+           fileInput("file", h3("File input"))),
+    
+    column(3, 
+           h3("Help text"),
+           helpText("Note: help text isn't a true widget,", 
+                    "but it provides an easy way to add text to",
+                    "accompany other widgets.")),
+    
+    column(3, 
+           numericInput("num", 
+                        h3("Numeric input"), 
+                        value = 1))   
+  ),
+  
+  fluidRow(
+    
+    column(3,
+           radioButtons("radio", h3("Radio buttons"),
+                        choices = list("Choice 1" = 1, "Choice 2" = 2,
+                                       "Choice 3" = 3),selected = 1)),
+    
+    column(3,
+           selectInput("select", h3("Select box"), 
+                       choices = list("Choice 1" = 1, "Choice 2" = 2,
+                                      "Choice 3" = 3), selected = 1)),
+    
+    column(3, 
+           sliderInput("slider1", h3("Sliders"),
+                       min = 0, max = 100, value = 50),
+           sliderInput("slider2", "",
+                       min = 0, max = 100, value = c(25, 75))
+    ),
+    
+    column(3, 
+           textInput("text", h3("Text input"), 
+                     value = "Enter text..."))   
   )
+  
 )
 
-# Define server logic !!!!
+# Define server logic ----
 server <- function(input, output) {
   
 }
 
-# Run the app !!!!
+# Run the app ----
 shinyApp(ui = ui, server = server)
